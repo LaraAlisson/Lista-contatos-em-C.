@@ -39,7 +39,8 @@
 
 ## Projetos em Destaque
 
-### C, Curso Completo
+### Lista de contato fins de aprendizagem e pratica.
+
 
 Curso: Minha altoria
 
