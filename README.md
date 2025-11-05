@@ -37,12 +37,10 @@
 
 <br/>
 
-## Projetos em Destaque
+## Projetos em Destaque.
 
-### Lista de contato fins de aprendizagem e pratica.
+### Lista de contato, aprendizagem e pratica.
 
-
-Curso: Minha altoria
 
 
 
