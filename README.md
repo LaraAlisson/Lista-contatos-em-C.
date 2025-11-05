@@ -47,7 +47,7 @@ Curso: Minha altoria
 
 ## 🚀 Tecnologias Utilizadas
 
-*  C
 *  ![C++](https://img.shields.io/badge/C++-00599C?style=flat-square&logo=cplusplus)
+*  ![Visual Studio Code](https://img.shields.io/badge/-Visual_Studio_Code-333333?style=flat&logo=visual-studio-code&logoColor=007ACC)
 
 
