@@ -24,13 +24,27 @@
     int obter_opcao();
 
     /*Função para carregar os contaos do arquivo*/
-    void read_contatos(void);
+    void ler_contatos_arquivo(Contato *contatos, int total_contatos);
+
+    /*Função para gravar os contatos no arquivo*/
+    void gravar_contatos_no_arquivo(Contato *lista_contato, int total_contato);
 
     /*Função para gravar os contatos no arquivo */
-    void white_contatos(void);
+    void add_contato(Contato *lista_contato, int *total_contatos);
 
-    /*Função para exibir contato pelo nome buscado*/
-    void exibe_contato(Contato nome);
+    /*Função para ordenar contatos após a adição ou remoção dos mesmo*/
+    void ordenar_contato(Contato *lista_contato, int total_contatos);
+
+    /*Função para listar todos os contatos e imprimir na tela*/
+    void listar_contato(Contato *lista_contato, int total_contatos);
+
+    /*Função para procuarar contato pelo nome*/
+    void buscar_contato_nome(Contato *lista_contato, int total_contatos);
+
+    /*Função para excluir contato pelo numero*/
+    void excluir_contato_nome(Contato *lista_contato, int *total_contatos, char *telefone);
+
+
 
 
 #endif /* End Contatos.h */
