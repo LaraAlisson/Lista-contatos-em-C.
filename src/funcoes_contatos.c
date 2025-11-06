@@ -50,22 +50,56 @@ int obter_opcao(){
 };
 
 /*Função para carregar os contaos do arquivo*/
-void ler_contatos_arquivo(Contato *contatos, int total_contatos){
-    /*codigo da função para carregar os contatos do arquvivo caso eles existam
-    caso não exista o arquivo cria o mesmo e deixa preparado para a 
-    */
+void ler_contatos_arquivo(Contato *lista_contatos, int *total_contatos){
 
-}
+
+    FILE *fp;
+    if((fp=fopen(NOME_ARQUIVO,"rb"))==NULL){
+        printf("A lista de cotatos nao pode ser aberta!\n");
+        return;
+    }
+
+    printf("INFO: Arquivo de contatos encontrado. Carregando dados...\n");
+
+    /**/
+    while(*total_contatos < MAXIMO_CONTATOS && fread(&lista_contatos[*total_contatos], sizeof(Contato), 1, fp)==1){
+        (*total_contatos)++;
+    }
+
+    fclose(fp);
+    printf("INFO: %d contatos carregados com sucesso para a memória!\n", *total_contatos);
+
+
+}/*end ler arquivo_contatos*/
+
+
 /*Função para gravar os contatos no arquivo*/
-void gravar_contatos_no_arquivo(Contato *lista_contato, int total_contato){
-    printf("Contatos gravados");
+void gravar_contatos_no_arquivo(Contato *lista_contato, int total_contatos){
+
+    FILE *fp;
+
+    if((fp = fopen(NOME_ARQUIVO,"wb")) == NULL){
+        printf("A lista de cotatos nao pode ser aberta!\n");
+        return;
+    }
+
+    size_t contatos_gravados = fwrite(lista_contato,sizeof(Contato),total_contatos,fp);
+
+    if(contatos_gravados != total_contatos ){
+        printf("Foram gravados %d contatos de um total de %d :",contatos_gravados, total_contatos);
+    }else{
+        printf("Contatos gravados com Sucesso !!!");
+    }
+    fclose(fp);
+
 }
 
 /*Função para gravar os contatos no arquivo */
-void add_contato(Contato *lista_contato, int *total_contatos){
-     /* CODIGO GRAVAR NO ARQUIVO*/
-    
+void adicionar_contato(Contato *lista_contato, int *total_contatos){
+
 }
+    
+
 
 void ordenar_contato(Contato *lista_contato, int total_contatos){
     /*codigo para exibir contos com conforme o nome solicitado*/

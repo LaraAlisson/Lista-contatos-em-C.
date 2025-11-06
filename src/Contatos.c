@@ -21,7 +21,8 @@ int main(){
     char telefone[15];
 
     /*Ao inicializar carrega os dados do arquivo na memoria*/
-    ler_contatos_arquivo(list_contato, total_contato);
+    ler_contatos_arquivo(list_contato, &total_contato);
+    
 
     do{
         exibe_menu();
@@ -30,7 +31,7 @@ int main(){
 
         switch (opcao_menu){
             case 1:
-                add_contato(list_contato, &total_contato);
+                adicionar_contato(list_contato, &total_contato);
                 ordenar_contato(list_contato, total_contato);
                 break;
             case 2:
