@@ -4,6 +4,7 @@
 # O executável está dentro da subpasta 'src'
 src/main.exe
 src/main
+src/contatos.dat
 
 
 

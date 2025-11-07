@@ -94,8 +94,81 @@ void gravar_contatos_no_arquivo(Contato *lista_contato, int total_contatos){
 
 }
 
-/*Função para gravar os contatos no arquivo */
+/*Função para adicionar  os contatos  */
 void adicionar_contato(Contato *lista_contato, int *total_contatos){
+
+    /*Verificação de Capacidade*/ 
+    if (*total_contatos >= MAXIMO_CONTATOS) {
+        printf("ERRO: O limite maximo de %d contatos foi atingido. Nao eh possivel adicionar mais.\n", MAXIMO_CONTATOS);
+        return; 
+    }
+
+
+    /*Ponteiro para a proxima posição da lsita de contato livre*/
+    Contato *novo_contato = &lista_contato[*total_contatos];
+    char buffer_entrada[TAMANHO_NOME];
+    
+    printf("+---------------------------------------+\n");
+    printf("|          ADICIONAR CONTATOS           |\n");
+    printf("+---------------------------------------+\n");
+
+    limpar_buffer();
+
+    /*Adiciona o nome a Estrutura*/
+    printf("Nome:\n -> "); 
+    if(fgets(buffer_entrada,TAMANHO_NOME,stdin)==NULL){
+        printf("ERRO: Falha ao ler o nome.\n");
+        return;
+    }
+
+    size_t len = strlen(buffer_entrada);
+
+    /*Sunstitui o \n por \0*/
+    if(len > 0 && buffer_entrada[len-1] == '\n'){
+        buffer_entrada[len-1]='\0';
+    }
+
+    if (strlen(buffer_entrada) == 0) {
+        printf("ERROR: Campo nome eh obrigatorio\n\n"); 
+        return;
+    }
+
+    strcpy(novo_contato->nome,buffer_entrada);
+
+    /*Adiciona o telefone a Estrutura*/
+    printf("Telefone:\n -> ");
+    if(fgets(buffer_entrada,TAMANHO_TELEFONE,stdin)==NULL){
+        printf("ERRO: Falha ao ler o telefone.\n");
+        return;
+    }
+
+    len = strlen(buffer_entrada);
+
+    /*Sunstitui o \n por \0*/
+    if(len > 0 && buffer_entrada[len-1] == '\n'){
+        buffer_entrada[len-1]='\0';
+    }
+
+    strcpy(novo_contato->telefone,buffer_entrada);
+
+    /*Adiciona o e-mail a Estrutura*/
+    printf("E-mail:\n -> ");
+    if(fgets(buffer_entrada,TAMANHO_EMAIL,stdin)==NULL){
+        printf("ERRO: Falha ao ler o telefone.\n");
+        return;
+    }
+
+    len = strlen(buffer_entrada);
+
+    /*Sunstitui o \n por \0*/
+    if(len > 0 && buffer_entrada[len-1] == '\n'){
+        buffer_entrada[len-1]='\0';
+    }
+
+    strcpy(novo_contato->email,buffer_entrada);
+
+
+    (*total_contatos)++;
 
 }
     
@@ -105,8 +178,18 @@ void ordenar_contato(Contato *lista_contato, int total_contatos){
     /*codigo para exibir contos com conforme o nome solicitado*/
 }
 
+
+/*Lista todos os contatos*/
 void listar_contato(Contato *lista_contato, int total_contatos){
-    /*codigo para listar o contato*/
+    int i = 0;
+
+    for(i = 0; i < total_contatos; i++){
+        printf("\nNome: %s\n", lista_contato[i].nome);
+        printf("Telefone: %s\n", lista_contato[i].telefone);
+        printf("Email: %s\n", lista_contato[i].email);
+
+        
+    }
 }
 
 /*Função para procuarar contato pelo nome*/
@@ -117,4 +200,11 @@ void buscar_contato_nome(Contato *lista_contato, int total_contatos){
 /*Função para excluir contato pelo numero*/
 void excluir_contato_nome(Contato *lista_contato, int *total_contatos, char *telefone){
     /*excluir contato pelo numero de telefone e nome pelo fato de nomes poderem ser repetido*/
+}
+
+void limpar_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {
+        // Apenas consome o caractere, não faz nada com ele
+    }
 }
