@@ -61,13 +61,13 @@ void ler_contatos_arquivo(Contato *lista_contatos, int *total_contatos){
 
     printf("INFO: Arquivo de contatos encontrado. Carregando dados...\n");
 
-    /**/
+    /*função pra ler um contato por vez e carregar no array lista_contatos*/
     while(*total_contatos < MAXIMO_CONTATOS && fread(&lista_contatos[*total_contatos], sizeof(Contato), 1, fp)==1){
         (*total_contatos)++;
     }
 
     fclose(fp);
-    printf("INFO: %d contatos carregados com sucesso para a memória!\n", *total_contatos);
+    printf("INFO: %d contatos carregados com sucesso para a memoria!\n", *total_contatos);
 
 
 }/*end ler arquivo_contatos*/
@@ -181,9 +181,11 @@ void ordenar_contato(Contato *lista_contato, int total_contatos){
 
 /*Lista todos os contatos*/
 void listar_contato(Contato *lista_contato, int total_contatos){
-    int i = 0;
+    printf("+---------------------------------------+\n");
+    printf("|          LISTA CONTATOS               |\n");
+    printf("+---------------------------------------+\n");
 
-    for(i = 0; i < total_contatos; i++){
+    for(int i = 0; i < total_contatos; i++){
         printf("\nNome: %s\n", lista_contato[i].nome);
         printf("Telefone: %s\n", lista_contato[i].telefone);
         printf("Email: %s\n", lista_contato[i].email);
@@ -194,7 +196,30 @@ void listar_contato(Contato *lista_contato, int total_contatos){
 
 /*Função para procuarar contato pelo nome*/
 void buscar_contato_nome(Contato *lista_contato, int total_contatos){
-    /*codigo buscar contato por nome*/
+    printf("+---------------------------------------+\n");
+    printf("|          PESQUISAR CONTATOS           |\n");
+    printf("+---------------------------------------+\n");
+    printf("Nome:\n -> ");
+    char buffer_entrada[TAMANHO_NOME];
+    limpar_buffer();
+
+    fgets(buffer_entrada,TAMANHO_NOME,stdin);
+
+    size_t len = strlen(buffer_entrada);
+    if(len > 0 && buffer_entrada[len-1]=='\n'){
+        buffer_entrada[len-1] = '\0';
+    }
+
+    for(int i = 0; i < total_contatos; i++){
+        if(strcmp(buffer_entrada,lista_contato[i].nome) == 0){
+            printf("\nNome : %s\n",lista_contato[i].nome);
+            printf("Telefone : %s\n",lista_contato[i].telefone);
+            printf("E-mail : %s\n",lista_contato[i].email);
+            
+        }
+
+    }
+    
 }
 
 /*Função para excluir contato pelo numero*/
