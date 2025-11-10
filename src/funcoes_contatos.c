@@ -29,8 +29,7 @@ int obter_opcao(){
         printf("ERRO: Entrada invalida. Por favor, digite um numero.\n");
     
         // Limpeza de buffer em caso de entrada válida mas fora do range (ex: "50\n")
-        int c;
-        while ((c = getchar()) != '\n' && c != EOF) {}
+        limpar_buffer();
             
         
         return obter_opcao();
@@ -39,9 +38,7 @@ int obter_opcao(){
     if(opcao < 0 || opcao > 4){
         printf("ERRO: Opcao fora do intervalo permitido (1 a 4).\n");
 
-        int c;
-
-        while ((c = getchar()) != '\n' && c != EOF);
+        limpar_buffer();
 
         return obter_opcao();
     }
@@ -196,11 +193,13 @@ void listar_contato(Contato *lista_contato, int total_contatos){
 
 /*Função para procuarar contato pelo nome*/
 void buscar_contato_nome(Contato *lista_contato, int total_contatos){
+
+    char buffer_entrada[TAMANHO_NOME];
+
     printf("+---------------------------------------+\n");
     printf("|          PESQUISAR CONTATOS           |\n");
     printf("+---------------------------------------+\n");
     printf("Nome:\n -> ");
-    char buffer_entrada[TAMANHO_NOME];
     limpar_buffer();
 
     fgets(buffer_entrada,TAMANHO_NOME,stdin);
@@ -223,8 +222,59 @@ void buscar_contato_nome(Contato *lista_contato, int total_contatos){
 }
 
 /*Função para excluir contato pelo numero*/
-void excluir_contato_nome(Contato *lista_contato, int *total_contatos, char *telefone){
-    /*excluir contato pelo numero de telefone e nome pelo fato de nomes poderem ser repetido*/
+void excluir_contato_nome(Contato *lista_contato, int *total_contatos){
+    
+    char buffer_entrada[TAMANHO_NOME];
+    int opcao = 0;
+
+    printf("+---------------------------------------+\n");
+    printf("|          EXLUIR CONTATOS              |\n");
+    printf("+---------------------------------------+\n");
+    printf("Nome:\n -> ");
+
+    limpar_buffer();
+    fgets(buffer_entrada,TAMANHO_NOME,stdin);
+
+    size_t len = strlen(buffer_entrada);
+
+    if(len > 0 && (buffer_entrada[len-1]=='\n')){
+        buffer_entrada[len-1] = '\0';
+    }
+
+    
+    for(int i = 0; i < *total_contatos; i++){
+        if(strcmp(buffer_entrada,lista_contato[i].nome) == 0){
+            printf("\nid: %d \n",i);
+            printf("Nome: %s\n",lista_contato[i].nome);
+            printf("Telefone: %s\n",lista_contato[i].telefone);
+            printf("Email: %s\n",lista_contato[i].email);
+           
+        }
+        
+    }
+
+    printf("\nDigite o Id do contato que deseja excluir ou \"S\" para Sair\n->");
+ 
+    if(scanf("%d",&opcao) != 1){
+        printf("Operacao Cancelada!!!\n");
+        limpar_buffer();
+        return;
+    }
+
+    for( opcao ; opcao < *total_contatos - 1; opcao++){
+
+        lista_contato[opcao] = lista_contato[opcao+1];
+
+    }
+
+    printf("Contato Excluido com sucesso !\n");
+    
+
+
+    (*total_contatos)--;
+    
+    limpar_buffer();
+     
 }
 
 void limpar_buffer() {

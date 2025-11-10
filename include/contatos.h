@@ -44,7 +44,7 @@
     void buscar_contato_nome(Contato *lista_contato, int total_contatos);
 
     /*Função para excluir contato pelo numero*/
-    void excluir_contato_nome(Contato *lista_contato, int *total_contatos, char *telefone);
+    void excluir_contato_nome(Contato *lista_contato, int *total_contatos);
 
     /*Função limpa buffer*/
     void limpar_buffer();

@@ -41,7 +41,7 @@ int main(){
                 buscar_contato_nome(list_contato, total_contato);
                 break;
             case 4:
-                excluir_contato_nome(list_contato, &total_contato, telefone );
+                excluir_contato_nome(list_contato, &total_contato);
                 break;
             case 0:
                 gravar_contatos_no_arquivo(list_contato, total_contato);
