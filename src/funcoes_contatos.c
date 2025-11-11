@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h> //para função tolower() 
 
 /*Função para exibir o menu do opções */
 void exibe_menu(void){
@@ -21,30 +22,27 @@ void exibe_menu(void){
 
 int obter_opcao(){
 
-     printf("Escolha uma opcao:\n ->  ");
-    int opcao = 0;
+     
+    int opcao = 10;
 
-    if(scanf("%d",&opcao) != 1){
+    while(opcao < 0 || opcao > 4){
 
-        printf("ERRO: Entrada invalida. Por favor, digite um numero.\n");
-    
-        // Limpeza de buffer em caso de entrada válida mas fora do range (ex: "50\n")
-        limpar_buffer();
+        printf("Escolha uma opcao:\n ->  ");
+
+        if(scanf("%d",&opcao) != 1){
+            printf("ERRO: Entrada invalida. Por favor, digite um numero.\n");
+            limpar_buffer();
+        }else if(opcao < 0 || opcao > 4){
+            printf("ERRO: Opcao fora do intervalo permitido (0 a 4).\n");
+            limpar_buffer();
             
-        
-        return obter_opcao();
-    }
-
-    if(opcao < 0 || opcao > 4){
-        printf("ERRO: Opcao fora do intervalo permitido (1 a 4).\n");
-
-        limpar_buffer();
-
-        return obter_opcao();
+        }
     }
 
     return opcao;
 };
+
+
 
 /*Função para carregar os contaos do arquivo*/
 void ler_contatos_arquivo(Contato *lista_contatos, int *total_contatos){
@@ -209,8 +207,17 @@ void buscar_contato_nome(Contato *lista_contato, int total_contatos){
         buffer_entrada[len-1] = '\0';
     }
 
+    buffer_entrada[TAMANHO_NOME] = converter_para_minusculo(buffer_entrada);
+
+    char nome_lista_minusculo[TAMANHO_NOME];
+
+
     for(int i = 0; i < total_contatos; i++){
-        if(strcmp(buffer_entrada,lista_contato[i].nome) == 0){
+
+        strcpy(nome_lista_minusculo, lista_contato[i].nome);
+        nome_lista_minusculo[TAMANHO_NOME]  = converter_para_minusculo(nome_lista_minusculo);
+
+        if(strcmp(buffer_entrada,nome_lista_minusculo) == 0){
             printf("\nNome : %s\n",lista_contato[i].nome);
             printf("Telefone : %s\n",lista_contato[i].telefone);
             printf("E-mail : %s\n",lista_contato[i].email);
@@ -241,9 +248,17 @@ void excluir_contato_nome(Contato *lista_contato, int *total_contatos){
         buffer_entrada[len-1] = '\0';
     }
 
+    buffer_entrada[TAMANHO_NOME] = converter_para_minusculo(buffer_entrada);
+
+    char nome_lista_minusculo[TAMANHO_NOME];
+
     
-    for(int i = 0; i < *total_contatos; i++){
-        if(strcmp(buffer_entrada,lista_contato[i].nome) == 0){
+    for(int i = 0; i <= *total_contatos; i++){
+
+        strcpy(nome_lista_minusculo, lista_contato[i].nome);
+        nome_lista_minusculo[TAMANHO_NOME]  = converter_para_minusculo(nome_lista_minusculo);
+
+        if(strcmp(buffer_entrada,nome_lista_minusculo) == 0){
             printf("\nid: %d \n",i);
             printf("Nome: %s\n",lista_contato[i].nome);
             printf("Telefone: %s\n",lista_contato[i].telefone);
@@ -253,7 +268,7 @@ void excluir_contato_nome(Contato *lista_contato, int *total_contatos){
         
     }
 
-    printf("\nDigite o Id do contato que deseja excluir ou \"S\" para Sair\n->");
+    printf("\nDigite o Id do contato que deseja excluir ou \'S\' para Sair\n->");
  
     if(scanf("%d",&opcao) != 1){
         printf("Operacao Cancelada!!!\n");
@@ -261,17 +276,34 @@ void excluir_contato_nome(Contato *lista_contato, int *total_contatos){
         return;
     }
 
-    for( opcao ; opcao < *total_contatos - 1; opcao++){
+    // O usuário digitou o ID 'opcao' e ele foi validado como numérico
+    if (opcao >= 0 && opcao < *total_contatos) {
+        
+        printf("\n!!!!! Confirmar exclusao do contato: !!!!!\n");
+        printf("-> Nome: %s\n", lista_contato[opcao].nome);
+        printf("-> Telefone: %s\n", lista_contato[opcao].telefone);
+        printf("-> Email: %s\n", lista_contato[opcao].email);
+        printf("\nDigite 's' para confirmar ou 'n' para cancelar:\n -> ");
 
-        lista_contato[opcao] = lista_contato[opcao+1];
-
+        // Limpar o buffer após o scanf anterior (se não tiver sido limpo)
+        limpar_buffer();
+        
+        char confirmacao = getchar();
+    
+        if (confirmacao == 's' || confirmacao == 'S') {
+            
+            // Lógica de exclusão (como já está no seu código)
+            for (int i = opcao; i < *total_contatos - 1; i++) {
+                lista_contato[i] = lista_contato[i+1];
+            }
+            (*total_contatos)--;
+            printf("INFO: Contato Excluido com sucesso!\n");
+            
+        } else {
+            printf("INFO: Operacao de exclusao cancelada pelo usuario.\n");
+        }
     }
 
-    printf("Contato Excluido com sucesso !\n");
-    
-
-
-    (*total_contatos)--;
     
     limpar_buffer();
      
@@ -282,4 +314,16 @@ void limpar_buffer() {
     while ((c = getchar()) != '\n' && c != EOF) {
         // Apenas consome o caractere, não faz nada com ele
     }
+}
+
+char converter_para_minusculo(char *str){
+    int i = 0;
+    
+    for(i = 0; str[i] != '\0'; i++){
+        str[i] = tolower((unsigned char)str[i]);
+    }
+
+    str[i] = '\0';
+
+    return *str;
 }

@@ -10,6 +10,7 @@
 #include<stdlib.h>
 #include<string.h>
 
+
 #include "../include/contatos.h"
 
 
@@ -18,7 +19,6 @@ int main(){
     Contato list_contato[MAXIMO_CONTATOS];
     int total_contato = 0;
     int opcao_menu = 0;
-    char telefone[15];
 
     /*Ao inicializar carrega os dados do arquivo na memoria*/
     ler_contatos_arquivo(list_contato, &total_contato);
