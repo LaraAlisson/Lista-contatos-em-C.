@@ -168,12 +168,6 @@ void adicionar_contato(Contato *lista_contato, int *total_contatos){
 }
     
 
-
-void ordenar_contato(Contato *lista_contato, int total_contatos){
-    /*codigo para exibir contos com conforme o nome solicitado*/
-}
-
-
 /*Lista todos os contatos*/
 void listar_contato(Contato *lista_contato, int total_contatos){
     printf("+---------------------------------------+\n");
@@ -207,7 +201,7 @@ void buscar_contato_nome(Contato *lista_contato, int total_contatos){
         buffer_entrada[len-1] = '\0';
     }
 
-    buffer_entrada[TAMANHO_NOME] = converter_para_minusculo(buffer_entrada);
+    converter_para_minusculo(buffer_entrada);
 
     char nome_lista_minusculo[TAMANHO_NOME];
 
@@ -215,7 +209,7 @@ void buscar_contato_nome(Contato *lista_contato, int total_contatos){
     for(int i = 0; i < total_contatos; i++){
 
         strcpy(nome_lista_minusculo, lista_contato[i].nome);
-        nome_lista_minusculo[TAMANHO_NOME]  = converter_para_minusculo(nome_lista_minusculo);
+        converter_para_minusculo(nome_lista_minusculo);
 
         if(strcmp(buffer_entrada,nome_lista_minusculo) == 0){
             printf("\nNome : %s\n",lista_contato[i].nome);
@@ -248,7 +242,7 @@ void excluir_contato_nome(Contato *lista_contato, int *total_contatos){
         buffer_entrada[len-1] = '\0';
     }
 
-    buffer_entrada[TAMANHO_NOME] = converter_para_minusculo(buffer_entrada);
+    converter_para_minusculo(buffer_entrada);
 
     char nome_lista_minusculo[TAMANHO_NOME];
 
@@ -256,7 +250,7 @@ void excluir_contato_nome(Contato *lista_contato, int *total_contatos){
     for(int i = 0; i <= *total_contatos; i++){
 
         strcpy(nome_lista_minusculo, lista_contato[i].nome);
-        nome_lista_minusculo[TAMANHO_NOME]  = converter_para_minusculo(nome_lista_minusculo);
+        converter_para_minusculo(nome_lista_minusculo);
 
         if(strcmp(buffer_entrada,nome_lista_minusculo) == 0){
             printf("\nid: %d \n",i);
@@ -268,7 +262,7 @@ void excluir_contato_nome(Contato *lista_contato, int *total_contatos){
         
     }
 
-    printf("\nDigite o Id do contato que deseja excluir ou \'S\' para Sair\n->");
+    printf("\nDigite o Id do contato que deseja excluir ou \'S\' para Sair\n-> ");
  
     if(scanf("%d",&opcao) != 1){
         printf("Operacao Cancelada!!!\n");
@@ -309,6 +303,7 @@ void excluir_contato_nome(Contato *lista_contato, int *total_contatos){
      
 }
 
+/*Função para limpar buffer*/
 void limpar_buffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {
@@ -316,7 +311,9 @@ void limpar_buffer() {
     }
 }
 
-char converter_para_minusculo(char *str){
+
+/*Função para converter string para minusculo*/
+void converter_para_minusculo(char *str){
     int i = 0;
     
     for(i = 0; str[i] != '\0'; i++){
@@ -325,5 +322,25 @@ char converter_para_minusculo(char *str){
 
     str[i] = '\0';
 
-    return *str;
 }
+
+
+/*Função para ordenar contatos Bubble Sort*/
+void ordenar_contato(Contato *lista_contato, int total_contatos){
+    
+    for (int i = 0; i < total_contatos - 1; i++) {
+        for (int j = 0; j < total_contatos - 1 - i; j++) { // Otimiza a varredura
+            if (strcmp(lista_contato[j].nome, lista_contato[j+1].nome) > 0) {
+                // Realiza a troca (Swap)
+                Contato temp = lista_contato[j];
+                lista_contato[j] = lista_contato[j+1];
+                lista_contato[j+1] = temp;
+            }
+
+        }
+         
+    }
+ 
+}
+
+
